@@ -9,6 +9,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (!game.isSolved()) {
             try {
+                System.out.println(game);
                 System.out.println("X ?");
                 int x = scanner.nextInt();
                 System.out.println("Y ?");
@@ -19,8 +20,8 @@ public class Main {
             } catch (InputMismatchException e) {
                 System.out.println("Please use a right number between 0 and " + (game.grid.length - 1));
                 scanner.next();
+                scanner.close();
             }
-            System.out.println(game);
         }
     }
 }
