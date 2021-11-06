@@ -1,6 +1,6 @@
 public class Game {
 
-    private boolean[][] grid;
+    public boolean[][] grid;
 
     public Game(int size) {
         this.grid = new boolean[size][size];
@@ -40,5 +40,7 @@ public class Game {
     public void toggle(int x, int y) {
         grid[x][y] = !grid[x][y];
     }
+
+
 
 }
