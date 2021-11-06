@@ -40,18 +40,21 @@ public class Game {
     public void toggle(int x, int y) {
         grid[x][y] = !grid[x][y];
         if (x < grid.length - 1) {
-            grid[x + 1][y] = !grid[x][y + 1];
+            grid[x + 1][y] = !grid[x+1][y];
         }
         if (x > 0) {
             grid[x - 1][y] = !grid[x - 1][y];
         }
-        if (y > 0) {
-            grid[x][y - 1] = !grid[x][y - 1];
-        }
+
         if (y < grid.length - 1) {
             grid[x][y + 1] = !grid[x][y + 1];
         }
+        if (y > 0) {
+            grid[x][y - 1] = !grid[x][y - 1];
+        }
     }
+
+
 
     public boolean isSolved() {
         for (int i = 0; i < grid.length; i++) {
@@ -60,7 +63,8 @@ public class Game {
                     return false;
                 }
             }
-        }return true;
+        }
+        return true;
     }
 
 }
