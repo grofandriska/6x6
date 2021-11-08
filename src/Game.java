@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Game {
 
     private int width;
 
-    private boolean [][] grid;
+    private boolean[][] grid;
 
-    private boolean [][] copy;
+    private boolean[][] copy;
 
     private long calculatedMoves = 0;
 
@@ -33,10 +34,15 @@ public class Game {
                 grid[i][j] = false;
             }
         }
-
         randomize();
 
+        this.copy = new boolean[size][];
 
+        int step = 0;
+        for (boolean[] row : grid) {
+            copy[step] = Arrays.copyOf(row, row.length);
+            step++;
+        }
     }
 
     public void randomize() {
@@ -49,7 +55,7 @@ public class Game {
         }
     }
 
-    public void calculateSteps(){
+    public void calculateSteps() {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
             }
@@ -87,6 +93,7 @@ public class Game {
 
     @Override
     public String toString() {
+
         String s = "";
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -98,8 +105,8 @@ public class Game {
             }
             s += "\n";
         }
-        s+="\n";
-        s+="\n";
+        s += "\n";
+        s += "\n";
 
         for (int i = 0; i < copy.length; i++) {
             for (int j = 0; j < copy[i].length; j++) {
@@ -112,8 +119,6 @@ public class Game {
             s += "\n";
         }
 
-        copy[2][0] = !copy[2][0];
-        System.out.println(grid.length);
         return s;
     }
 
