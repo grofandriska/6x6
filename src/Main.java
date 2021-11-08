@@ -5,13 +5,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Game game = new Game(6);
-        Scanner scanner = new Scanner(System.in);
+        Game game = new Game(3);
         System.out.println(game);
+
+        game.chasingTheLights();
+        System.out.println(game);
+
+        Scanner scanner = new Scanner(System.in);
 /*
         while (!game.isSolved()) {
             try {
-
                 System.out.println(game);
                 System.out.println("X ?");
                 int x = scanner.nextInt();
@@ -27,7 +30,8 @@ public class Main {
                 scanner.next();
                 scanner.close();
             }
-        }*/
-    }
+
+    }*/
+}
 }
 

@@ -18,6 +18,22 @@ public class Game {
 
     private List<int[]> bestSteps;
 
+    public void chasingTheLights() {
+        for (int i = 1; i < copy.length; i++) {
+            for (int j = 0; j < copy[i].length; j++) {
+                if (copy[i - 1][j] = true) {
+                    toggleAi(i, j);
+                    calculatedMoves++;
+                }
+            }
+        }
+    }
+
+    public void calculateSteps() {
+        calculatedMoves = 0;
+
+    }
+
     public Game(int size) {
         init(size);
     }
@@ -35,14 +51,8 @@ public class Game {
             }
         }
         randomize();
-
         this.copy = new boolean[size][];
-
-        int step = 0;
-        for (boolean[] row : grid) {
-            copy[step] = Arrays.copyOf(row, row.length);
-            step++;
-        }
+        copyBoard();
     }
 
     public void randomize() {
@@ -55,12 +65,20 @@ public class Game {
         }
     }
 
-    public void calculateSteps() {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-            }
+    public void toggleAi(int x, int y) {
+        copy[x][y] = !copy[x][y];
+        if (x < copy.length - 1) {
+            copy[x + 1][y] = !copy[x + 1][y];
         }
-
+        if (x > 0) {
+            copy[x - 1][y] = !copy[x - 1][y];
+        }
+        if (y < copy.length - 1) {
+            copy[x][y + 1] = !copy[x][y + 1];
+        }
+        if (y > 0) {
+            copy[x][y - 1] = !copy[x][y - 1];
+        }
     }
 
     public void toggle(int x, int y) {
@@ -91,23 +109,17 @@ public class Game {
         return true;
     }
 
+    private void copyBoard() {
+        int step = 0;
+        for (boolean[] row : grid) {
+            copy[step] = Arrays.copyOf(row, row.length);
+            step++;
+        }
+    }
+
     @Override
     public String toString() {
-
         String s = "";
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                if (grid[i][j]) {
-                    s += "#";
-                } else {
-                    s += ".";
-                }
-            }
-            s += "\n";
-        }
-        s += "\n";
-        s += "\n";
-
         for (int i = 0; i < copy.length; i++) {
             for (int j = 0; j < copy[i].length; j++) {
                 if (copy[i][j]) {
@@ -118,48 +130,11 @@ public class Game {
             }
             s += "\n";
         }
-
         return s;
     }
 
     public boolean[][] getGrid() {
         return grid;
     }
-
-    public void setGrid(boolean[][] grid) {
-        this.grid = grid;
-    }
-
-    public boolean[][] getCopy() {
-        return copy;
-    }
-
-    public void setCopy(boolean[][] copy) {
-        this.copy = copy;
-    }
-
-    public long getCalculatedMoves() {
-        return calculatedMoves;
-    }
-
-    public void setCalculatedMoves(long calculatedMoves) {
-        this.calculatedMoves = calculatedMoves;
-    }
-
-    public long getMinSteps() {
-        return minSteps;
-    }
-
-    public void setMinSteps(long minSteps) {
-        this.minSteps = minSteps;
-    }
-
-    public List<int[]> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(List<int[]> steps) {
-        this.steps = steps;
-
-    }
 }
+
