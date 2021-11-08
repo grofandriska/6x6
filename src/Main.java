@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
         Game game = new Game(3);
         System.out.println(game);
 
@@ -12,7 +11,8 @@ public class Main {
         System.out.println(game);
 
         Scanner scanner = new Scanner(System.in);
-/*
+
+        /*
         while (!game.isSolved()) {
             try {
                 System.out.println(game);
@@ -31,7 +31,7 @@ public class Main {
                 scanner.close();
             }
 
-    }*/
-}
+        }*/
+    }
 }
 

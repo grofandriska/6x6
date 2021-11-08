@@ -18,24 +18,19 @@ public class Game {
 
     private List<int[]> bestSteps;
 
-    public void chasingTheLights() {
-        for (int i = 1; i < copy.length; i++) {
-            for (int j = 0; j < copy[i].length; j++) {
-                if (copy[i - 1][j] = true) {
-                    toggleAi(i, j);
-                    calculatedMoves++;
-                }
-            }
-        }
-    }
-
-    public void calculateSteps() {
-        calculatedMoves = 0;
-
-    }
 
     public Game(int size) {
         init(size);
+    }
+
+    public void randomize() {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (Math.random() > 0.53) {
+                    grid[i][j] = true;
+                }
+            }
+        }
     }
 
     public void init(int size) {
@@ -53,49 +48,6 @@ public class Game {
         randomize();
         this.copy = new boolean[size][];
         copyBoard();
-    }
-
-    public void randomize() {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                if (Math.random() > 0.53) {
-                    grid[i][j] = true;
-                }
-            }
-        }
-    }
-
-    public void toggleAi(int x, int y) {
-        copy[x][y] = !copy[x][y];
-        if (x < copy.length - 1) {
-            copy[x + 1][y] = !copy[x + 1][y];
-        }
-        if (x > 0) {
-            copy[x - 1][y] = !copy[x - 1][y];
-        }
-        if (y < copy.length - 1) {
-            copy[x][y + 1] = !copy[x][y + 1];
-        }
-        if (y > 0) {
-            copy[x][y - 1] = !copy[x][y - 1];
-        }
-    }
-
-    public void toggle(int x, int y) {
-        grid[x][y] = !grid[x][y];
-        if (x < grid.length - 1) {
-            grid[x + 1][y] = !grid[x + 1][y];
-        }
-        if (x > 0) {
-            grid[x - 1][y] = !grid[x - 1][y];
-        }
-
-        if (y < grid.length - 1) {
-            grid[x][y + 1] = !grid[x][y + 1];
-        }
-        if (y > 0) {
-            grid[x][y - 1] = !grid[x][y - 1];
-        }
     }
 
     public boolean isSolved() {
@@ -117,6 +69,67 @@ public class Game {
         }
     }
 
+    public void toggleAi(int x, int y) {
+        copy[x][y] = !copy[x][y];
+
+        if (x < copy.length - 1) {
+            copy[x + 1][y] = !copy[x + 1][y];
+        }
+        if (x > 0) {
+            copy[x - 1][y] = !copy[x - 1][y];
+        }
+        if (y < copy.length - 1) {
+            copy[x][y + 1] = !copy[x][y + 1];
+        }
+        if (y > 0) {
+            copy[x][y - 1] = !copy[x][y - 1];
+        }
+
+        calculatedMoves++;
+        steps.add(new int[]{x, y});
+    }
+
+    public void toggle(int x, int y) {
+        grid[x][y] = !grid[x][y];
+        if (x < grid.length - 1) {
+            grid[x + 1][y] = !grid[x + 1][y];
+        }
+        if (x > 0) {
+            grid[x - 1][y] = !grid[x - 1][y];
+        }
+
+        if (y < grid.length - 1) {
+            grid[x][y + 1] = !grid[x][y + 1];
+        }
+        if (y > 0) {
+            grid[x][y - 1] = !grid[x][y - 1];
+        }
+    }
+
+    public void chasingTheLights() {
+        for (int i = 1; i < copy.length; i++) {
+            for (int j = 0; j < copy[i].length; j++) {
+                if (copy[i - 1][j] = true) {
+                    toggleAi(i, j);
+                }
+            }
+        }
+    }
+
+    public void calculateSteps() {
+        int mask = 0;
+        calculatedMoves = 0;
+        int[] counters = new int[width];
+
+        for (int i = 0; i < counters.length; i++) {
+            counters[i] = i;
+        }
+        for (int i = 0; i < mask; i++) {
+            toggleAi(i, 0);
+        }
+        chasingTheLights();
+    }
+    
     @Override
     public String toString() {
         String s = "";
