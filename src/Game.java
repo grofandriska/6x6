@@ -10,8 +10,6 @@ public class Game {
 
     private boolean[][] copy;
 
-    private long calculatedMoves = 0;
-
     private long minSteps;
 
     private List<int[]> steps;
@@ -84,8 +82,6 @@ public class Game {
         if (y > 0) {
             copy[x][y - 1] = !copy[x][y - 1];
         }
-
-        calculatedMoves++;
         steps.add(new int[]{x, y});
     }
 
@@ -117,19 +113,37 @@ public class Game {
     }
 
     public void calculateSteps() {
-        int mask = 0;
-        calculatedMoves = 0;
+        int XX = 0;
         int[] counters = new int[width];
 
+        //setting counters acc to width
         for (int i = 0; i < counters.length; i++) {
             counters[i] = i;
         }
-        for (int i = 0; i < mask; i++) {
+
+        //saving best moves
+        for (int i = 0; i < XX; i++) {
+            steps.clear();
             toggleAi(i, 0);
+
+            chasingTheLights();
+
+            if (isSolved()) {
+                if (steps.size() < minSteps) {
+                    minSteps = steps.size();
+                    bestSteps = List.copyOf(steps);
+                }
+
+            }
+            if (counters[i] + 1 < counters[i + 1]) {
+                counters[i]++;
+            }else{
+
+            }
         }
-        chasingTheLights();
     }
-    
+
+
     @Override
     public String toString() {
         String s = "";

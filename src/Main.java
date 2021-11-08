@@ -5,16 +5,16 @@ public class Main {
 
     public static void main(String[] args) {
         Game game = new Game(3);
-        System.out.println(game);
-
         game.chasingTheLights();
+        game.calculateSteps();
         System.out.println(game);
 
         Scanner scanner = new Scanner(System.in);
 
-        /*
-        while (!game.isSolved()) {
-            try {
+
+
+            game.chasingTheLights();
+           /* try {
                 System.out.println(game);
                 System.out.println("X ?");
                 int x = scanner.nextInt();
@@ -29,9 +29,9 @@ public class Main {
                 System.out.println("Please use a right number between 0 and " + (game.getGrid().length - 1));
                 scanner.next();
                 scanner.close();
-            }
+            }*/
 
-        }*/
+
     }
 }
 
