@@ -87,7 +87,7 @@ public class Game {
     public void chasingTheLights() {
         for (int i = 1; i < copy.length; i++) {
             for (int j = 0; j < copy[i].length; j++) {
-                if (copy[i - 1][j] = true) {
+                if (copy[i - 1][j] == true) {
                     toggleCell(i, j);
                 }
             }
