@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Game {
 
+    int possibilities = 0;
+
     private int width;
 
     private boolean[][] grid;
@@ -42,6 +44,7 @@ public class Game {
                 grid[i][j] = false;
             }
         }
+
         randomize();
         this.copy = new boolean[size][];
         copyBoard();
@@ -81,7 +84,7 @@ public class Game {
         if (y > 0) {
             copy[x][y - 1] = !copy[x][y - 1];
         }
-        steps.add(new int[] { x, y });
+        steps.add(new int[]{x, y});
     }
 
     public void chasingTheLights() {
@@ -89,6 +92,7 @@ public class Game {
             for (int j = 0; j < copy[i].length; j++) {
                 if (copy[i - 1][j] == true) {
                     toggleCell(i, j);
+
                 }
             }
         }
@@ -97,14 +101,14 @@ public class Game {
     public void calculateSteps() {
         int indexMarker = 0; // --> ez volt az "xx" 🙂
         int[] counters = new int[width];
-
         // setting counters acc to width
         for (int i = 0; i < counters.length; i++) {
             counters[i] = i;
         }
-
         int currentIndex = 0;
         do {
+
+
             steps.clear();
             copyBoard();
             for (int i = 0; i <= indexMarker; i++) { // toggle bottom lights per current variation of counters
@@ -114,12 +118,12 @@ public class Game {
             // checking state after Chasing of Ligths and if it is correct state
             // and this is a best move then store the steps
             if (isSolved()) {
+                //sava all possibilities here to a new array
                 if (steps.size() < minSteps) {
                     minSteps = steps.size();
                     bestSteps = List.copyOf(steps);
                 }
             }
-
             // stepping the counters
             boolean successed = false;
             do {
@@ -148,14 +152,11 @@ public class Game {
                 }
             } while (!successed);
 
-        } while (indexMarker < width);
+        }
+        while (indexMarker < width);
 
     }
-
-    public List<int[]> getBestSteps() {
-        return bestSteps;
-    }
-
+    
     @Override
     public String toString() {
         String s = "";
@@ -175,4 +176,9 @@ public class Game {
     public boolean[][] getGrid() {
         return grid;
     }
+
+    public List<int[]> getBestSteps() {
+        return bestSteps;
+    }
+
 }
