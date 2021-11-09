@@ -1,10 +1,14 @@
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Game {
 
-    int possibilities = 0;
+    private long possibilities = 0;
+
+    private LocalTime startTime;
 
     private int width;
 
@@ -99,38 +103,38 @@ public class Game {
     }
 
     public void calculateSteps() {
-        int indexMarker = 0; // --> ez volt az "xx" 🙂
+        startTime = LocalTime.now();
+        int indexMarker = 0;
+        int currentIndex = 0;
         int[] counters = new int[width];
         // setting counters acc to width
         for (int i = 0; i < counters.length; i++) {
             counters[i] = i;
         }
-        int currentIndex = 0;
+        System.out.println("Started: " + startTime);
         do {
-
-
             steps.clear();
             copyBoard();
             for (int i = 0; i <= indexMarker; i++) { // toggle bottom lights per current variation of counters
                 toggleCell(0, counters[i]);
             }
             chasingTheLights();
-            // checking state after Chasing of Ligths and if it is correct state
+            possibilities++;
+            // checking state after Chasing of Lights and if it is correct state
             // and this is a best move then store the steps
-            if (isSolved()) {
-                //sava all possibilities here to a new array
+            if (isSolved()) {  // TODO sava all possibilities here to a new array ??
                 if (steps.size() < minSteps) {
                     minSteps = steps.size();
                     bestSteps = List.copyOf(steps);
                 }
             }
             // stepping the counters
-            boolean successed = false;
+            boolean succeed = false;
             do {
                 if (currentIndex == indexMarker) {
                     if (counters[currentIndex] < this.width - 1) {
                         counters[currentIndex]++;
-                        successed = true;
+                        succeed = true;
                         currentIndex = 0;
                     } else {
                         counters[currentIndex] = currentIndex;
@@ -139,24 +143,25 @@ public class Game {
                         }
                         currentIndex = 0;
                         indexMarker++;
-                        successed = true;
+                        succeed = true;
                     }
                 } else if (counters[currentIndex] + 1 < counters[currentIndex + 1]) {
                     counters[currentIndex]++;
-                    successed = true;
+                    succeed = true;
                     currentIndex = 0;
                 } else {
                     counters[currentIndex] = currentIndex;
                     currentIndex++;
-                    successed = false;
+                    succeed = false;
                 }
-            } while (!successed);
+            } while (!succeed);
 
         }
         while (indexMarker < width);
+        System.out.println("Ended: " + LocalTime.now());
 
     }
-    
+
     @Override
     public String toString() {
         String s = "";
@@ -181,4 +186,7 @@ public class Game {
         return bestSteps;
     }
 
+    public long getPossibilities() {
+        return possibilities;
+    }
 }
